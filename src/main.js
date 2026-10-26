@@ -290,10 +290,14 @@ async function checkLauncherIntegrity() {
 const GB = (b) => (b / 1073741824).toFixed(1) + ' GB';
 function ramInfo() {
   const totalMb = Math.floor(os.totalmem() / 1048576);
-  const recMb = totalMb >= 8192 ? Math.min(8192, Math.max(4096, Math.floor(totalMb / 3 / 256) * 256)) : Math.max(2048, Math.floor(totalMb * 0.5 / 256) * 256);
-  return { totalMb, freeMb: Math.floor(os.freemem() / 1048576), minMb: 2048, goodMb: 4096, recMb, maxMb: Math.max(2048, Math.floor(totalMb * 0.75 / 256) * 256) };
+  // Minecraft 1.6.4: mais de 3-4 GB nao ajuda e, em PC com video integrado (que usa a RAM do PC),
+  // tira memoria do video e as texturas somem (baus/itens invisiveis, barra branca, mapa preto).
+  const recMb = totalMb >= 6144 ? 3072 : 2048;
+  const maxMb = Math.max(2048, Math.min(4096, Math.floor(totalMb * 0.5 / 256) * 256));
+  return { totalMb, freeMb: Math.floor(os.freemem() / 1048576), minMb: 1536, goodMb: 2048, recMb, maxMb };
 }
-const ramMbFor = () => loadSettings().ramMb || ramInfo().recMb;
+// RAM salva acima do limite novo (ex.: 7 GB de versoes antigas) volta para a recomendada
+const ramMbFor = () => { const info = ramInfo(); const s = loadSettings().ramMb; return s && s >= 1024 && s <= info.maxMb ? s : info.recMb; };
 function mcVersion() { return (manifest && manifest.mcVersion) || config.mcVersion; }
 function diagnose() {
   const rows = [];

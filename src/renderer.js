@@ -203,7 +203,7 @@ function bindRam(el, onSave) {
   el.slider.min = min; el.slider.max = max; el.slider.step = 256;
   const pos = (v) => ((v - min) / (max - min)) * 100;
   if (el.marks) {
-    const m = [[SYS.goodMb, '4 GB'], [SYS.recMb, SYS.recMb === SYS.goodMb ? '' : gb(SYS.recMb)]];
+    const m = [[SYS.goodMb, gb(SYS.goodMb)], [SYS.recMb, SYS.recMb === SYS.goodMb ? '' : gb(SYS.recMb)]];
     el.marks.innerHTML = m.filter((x) => x[1]).map(([v, t]) => `<span class="${v === SYS.recMb ? 'rec' : ''}" style="left:${pos(v)}%">${t}${v === SYS.recMb ? ' ★' : ''}</span>`).join('');
   }
   const paint = () => {
@@ -212,9 +212,9 @@ function bindRam(el, onSave) {
     const [txt, cls] = ramLevel(v);
     el.val.textContent = gb(v);
     el.badge.textContent = txt; el.badge.className = 'badge ' + cls;
-    el.info.textContent = `Seu PC tem ${gb(SYS.totalMb)}. Para jogar com mods, ${gb(SYS.goodMb)} já é bom — quanto mais, melhor, até ~${gb(SYS.recMb)}. O resto fica para o Windows.`;
+    el.info.textContent = `Seu PC tem ${gb(SYS.totalMb)}. No Minecraft 1.6.4, ${gb(SYS.recMb)} é o ideal — mais que isso não deixa o jogo mais rápido e pode fazer texturas sumirem (baús e itens invisíveis) em PCs com vídeo integrado.`;
   };
-  el.slider.value = S.ramMb || SYS.recMb;
+  el.slider.value = (S.ramMb && S.ramMb <= SYS.maxMb) ? S.ramMb : SYS.recMb;
   paint();
   el.slider.oninput = paint;
   el.slider.onchange = () => { S.ramMb = +el.slider.value; api.save({ ramMb: S.ramMb }); onSave && onSave(); };
@@ -404,7 +404,7 @@ async function wizRender() {
   if (id === 'done') {
     const java = S.javaPath ? 'Personalizado' : `Java ${SYS.javaMajor} (automático)`;
     body.innerHTML = `<div class="hero2"><img src="../assets/icon.png" alt=""><h2>Tudo pronto!</h2><p class="lead">Seu launcher está configurado. Clique em <b>Jogar</b> — na primeira vez ele ainda baixa as bibliotecas e sons do Minecraft, depois abre direto.</p></div>
-      <div class="sum"><div><span>Conta</span><b>${W.mode === 'microsoft' ? esc(msName || 'Microsoft') : esc($('nick').dataset.saved || S.nick || '')}</b></div><div><span>Memória RAM</span><b>${gb(S.ramMb || SYS.recMb)}</b></div><div><span>Java</span><b>${java}</b></div></div>`;
+      <div class="sum"><div><span>Conta</span><b>${W.mode === 'microsoft' ? esc(msName || 'Microsoft') : esc($('nick').dataset.saved || S.nick || '')}</b></div><div><span>Memória RAM</span><b>${gb((S.ramMb && S.ramMb <= SYS.maxMb) ? S.ramMb : SYS.recMb)}</b></div><div><span>Java</span><b>${java}</b></div></div>`;
     $('wnext').textContent = 'Começar a jogar';
     $('wnext').onclick = wizFinish;
   }
