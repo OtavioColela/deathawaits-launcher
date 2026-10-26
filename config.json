@@ -1,0 +1,28 @@
+{
+  "name": "DeathAwaits",
+  "modpackName": "Modpack",
+  "mcVersion": "1.6.4",
+  "javaDownloadUrl": "https://api.adoptium.net/v3/binary/latest/{v}/ga/windows/x64/jre/hotspot/normal/eclipse",
+  "manifestUrl": "https://github.com/ryan1235/DeathAwaits/releases/latest/download/manifest.json",
+  "server": {
+    "host": "node.skycenterhosting.com.br",
+    "port": 25567
+  },
+  "ram": {
+    "min": "1G",
+    "max": "3G"
+  },
+  "links": {
+    "Discord": "https://discord.gg/gc73gQfb5F",
+    "GitHub": "https://github.com/ryan1235/DeathAwaits"
+  },
+  "news": {
+    "welcome": "Seja bem-vindo ao DeathAwaits! Prepare-se para um mundo onde cada decisão pode ser a última.",
+    "title": "Novidades",
+    "text": "O servidor está em breve. Fique ligado nas atualizações!"
+  },
+  "github": {
+    "owner": "ryan1235",
+    "repo": "DeathAwaits"
+  }
+}

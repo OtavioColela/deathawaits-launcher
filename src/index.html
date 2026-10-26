@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:">
+<title>DeathAwaits Launcher</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="settings.css">
+<link rel="stylesheet" href="anim.css">
+</head>
+<body>
+<header class="titlebar">
+  <div class="brand"><img class="tb-icon" src="../assets/icon.png" alt=""><span>DeathAwaits Launcher</span></div>
+  <div class="wc">
+    <button data-w="min">&#8212;</button>
+    <button data-w="max">&#9633;</button>
+    <button data-w="close">&#10005;</button>
+  </div>
+</header>
+
+<div class="app">
+  <nav class="side">
+    <div class="nav active" data-page="Home"><svg viewBox="0 0 24 24"><path d="M12 3 2 12h3v8h5v-6h4v6h5v-8h3z"/></svg>Início</div>
+    <div class="nav" data-page="News"><svg viewBox="0 0 24 24"><path d="M3 10v4h3l5 4V6L6 10zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>Novidades</div>
+    <div class="nav" data-page="Settings"><svg viewBox="0 0 24 24"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.5 7.5 0 0 0-1.7-1L15 3h-4l-.4 2.9a7.5 7.5 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.7 1.7 1L11 21h4l.4-2.9c.6-.3 1.2-.6 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>Configurações</div>
+    <div class="ver" id="launcherVer">DeathAwaits Launcher v1.0</div>
+  </nav>
+
+  <main id="pageHome">
+    <section class="hero"><canvas id="embers"></canvas></section>
+
+    <section class="card play">
+      <img class="grass" alt="" src="../assets/grass.svg">
+      <div class="pack"><h2 id="packName">DeathAwaits</h2><span id="packSub">Modpack 1.6.4</span></div>
+      <div class="nick">
+        <label id="nickLabel">Seu Nickname:</label>
+        <input id="nick" maxlength="16" placeholder="Digite seu Nickname.." spellcheck="false" autocomplete="off">
+        <span id="nickHint" class="hint hidden">3 a 16 letras, números ou _</span>
+      </div>
+      <button id="play" class="btn-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span id="playTxt">Jogar</span></button>
+      <div class="dd">
+        <button id="ddBtn" class="btn-dd"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+        <div id="menu" class="menu hidden">
+          <div data-mode="offline">Conta pirata (offline)</div>
+          <div data-mode="microsoft">Conta original (Microsoft)</div>
+          <div data-mode="logout" id="logoutItem" class="hidden">Sair da conta Microsoft</div>
+        </div>
+      </div>
+      <div id="progress" class="progress hidden"><div class="ptop"><span id="progTxt"></span><b id="progPct"></b></div><div class="bar"><i id="progBar"></i></div></div>
+    </section>
+
+    <section class="card info">
+      <div class="left">
+        <small>Última atualização: <span id="relDate"></span></small>
+        <h3 class="reltitle" id="relTitle"></h3>
+        <p id="welcome"></p>
+      </div>
+      <div class="right">
+        <small>Versão</small><b id="vMc">1.6.4</b>
+        <small>Modpack</small><b id="vPack">DeathAwaits</b>
+      </div>
+    </section>
+
+    <section class="card news" id="newsCard">
+      <svg viewBox="0 0 24 24"><path d="M3 10v4h3l5 4V6L6 10zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+      <div><b id="newsTitle">Novidades</b><p id="newsText"></p></div>
+      <span class="chev">&rsaquo;</span>
+    </section>
+  </main>
+
+  <main id="pageNews" class="hidden newspage">
+    <h1>Novidades <button class="btn2 sm" id="relReload">Atualizar</button></h1>
+    <div id="relList"></div>
+  </main>
+
+  <main id="pageSettings" class="hidden settings">
+    <h1>Configurações</h1>
+
+    <h2 class="sub">Diagnóstico do PC <button class="btn2 sm" id="rediag">Verificar de novo</button></h2>
+    <section class="card set" id="diag"></section>
+
+    <h2 class="sub">Integridade</h2>
+    <section class="card set">
+      <div class="row"><div><b>Launcher</b><small id="intLauncher">Confere se os arquivos do launcher não foram alterados</small></div><button class="btn2" id="vLauncher">Verificar</button></div>
+      <div class="row"><div><b>Modpack</b><small id="intPack">Confere mods, Forge e libs contra o manifesto oficial</small></div><span class="btns"><button class="btn2" id="vPack">Verificar</button><button class="btn2" id="repair">Reparar</button></span></div>
+    </section>
+
+    <h2 class="sub">Memória RAM</h2>
+    <section class="card set">
+      <div class="row col"><div class="ramtop"><div><b id="ramVal">4 GB</b> <span id="ramBadge" class="badge">Bom</span></div><button class="btn2 sm" id="ramAuto">Usar recomendado</button></div>
+        <div class="slider"><input type="range" id="ram"><div class="marks" id="ramMarks"></div></div>
+        <small id="ramInfo"></small></div>
+    </section>
+
+    <h2 class="sub">Java</h2>
+    <section class="card set">
+      <div class="row col"><div class="ramtop"><div><b class="t">Versão do Java</b><small id="javaRec"></small></div><button class="btn2 sm" id="javaScan">Detectar de novo</button></div>
+        <select id="javaSel" class="sel"></select>
+        <small id="javaWarn" class="warnline hidden"></small></div>
+    </section>
+
+    <h2 class="sub">Jogo</h2>
+    <section class="card set">
+      <div class="row"><div><b>Ao iniciar o jogo</b><small>O launcher volta sozinho quando o Minecraft fechar</small></div>
+        <select id="after" class="sel w220"><option value="hide">Fechar o launcher (volta ao sair)</option><option value="minimize">Minimizar</option><option value="keep">Manter aberto</option></select></div>
+      <div class="row"><div><b>Tela cheia</b><small>Abre o Minecraft em tela cheia</small></div><label class="switch"><input type="checkbox" id="fullscreen"><i></i></label></div>
+      <div class="row"><div><b>Tamanho da janela</b><small>Usado quando não estiver em tela cheia</small></div><span class="btns"><input class="inp num" id="winW" type="number" min="640" placeholder="854"> <span class="x">×</span> <input class="inp num" id="winH" type="number" min="480" placeholder="480"></span></div>
+      <div class="row"><div><b>Argumentos extras da JVM</b><small>Avançado — deixe vazio se não souber</small></div><input class="inp w220" id="jvm" placeholder="-XX:+UseG1GC" spellcheck="false"></div>
+    </section>
+
+    <h2 class="sub">Ferramentas</h2>
+    <section class="card set">
+      <div class="row"><div><b>Pasta do jogo</b><small id="dirInfo"></small></div><button class="btn2" id="openDir">Abrir</button></div>
+      <div class="row"><div><b>Log do último jogo</b><small>Útil para ver erros e crashes</small></div><button class="btn2" id="openLogs">Abrir</button></div>
+      <div class="row"><div><b>Configuração inicial</b><small>Refazer o passo a passo de primeiro uso</small></div><button class="btn2" id="redoWiz">Refazer</button></div>
+      <div class="row"><div><b>Restaurar padrões</b><small>Volta todas as opções acima ao padrão</small></div><button class="btn2 danger" id="resetAll">Restaurar</button></div>
+    </section>
+  </main>
+
+  <aside class="right-panel">
+    <h3>Status do servidor</h3>
+    <div class="status"><i id="dot" class="dot off"></i><span id="stxt" class="off">Offline</span></div>
+    <hr>
+    <h4>Links úteis</h4>
+    <ul id="links"></ul>
+  </aside>
+</div>
+
+<div id="wizard" class="wiz hidden">
+  <div class="wbox">
+    <div class="steps" id="wsteps"></div>
+    <div id="wbody" class="wbody"></div>
+    <div class="wfoot"><button class="btn2" id="wback">Voltar</button><span id="wmsg" class="wmsg"></span><button class="btn-play wnext" id="wnext">Continuar</button></div>
+  </div>
+</div>
+<script src="markdown.js"></script>
+<script src="renderer.js"></script>
+</body>
+</html>

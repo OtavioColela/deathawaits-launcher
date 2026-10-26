@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 270" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07070a"/><stop offset=".7" stop-color="#16090b"/><stop offset="1" stop-color="#2a0a0c"/></linearGradient>
+<radialGradient id="glow" cx=".5" cy=".6" r=".5"><stop offset="0" stop-color="#a00" stop-opacity=".45"/><stop offset="1" stop-color="#a00" stop-opacity="0"/></radialGradient>
+<radialGradient id="moon" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#dfe3ea"/><stop offset="1" stop-color="#8a909c"/></radialGradient>
+</defs>
+<rect width="620" height="270" fill="url(#sky)"/>
+<rect width="620" height="270" fill="url(#glow)"/>
+<circle cx="500" cy="42" r="15" fill="url(#moon)"/>
+<g fill="#050507"><path d="M0 270V200l30-8 20 6 40-14 30 10 60-20 40 12 70-18 60 14 80-16 60 12 60-8 70 10v78z"/>
+<rect x="120" y="120" width="5" height="90"/><rect x="108" y="116" width="30" height="8"/><rect x="540" y="130" width="6" height="90"/><rect x="528" y="136" width="30" height="6"/></g>
+<path d="M0 235h620v35H0z" fill="#0a0506"/>
+<path d="M0 238h620" stroke="#5a0d10" stroke-width="2" opacity=".6"/>
+<g font-family="Georgia,serif" font-style="italic" font-weight="900">
+<text x="226" y="170" font-size="120" fill="#cfcfd2" letter-spacing="-8">D</text>
+<text x="292" y="170" font-size="120" fill="#d4141c" letter-spacing="-8">A</text></g>
+<text x="310" y="215" text-anchor="middle" font-family="Segoe UI,Arial" font-size="19" letter-spacing="9" fill="#c8c8cc">DEATH<tspan fill="#d4141c">AWAITS</tspan></text>
+<path d="M255 20c70-25 130 0 170 45" stroke="#999" stroke-width="3" fill="none"/>
+</svg>

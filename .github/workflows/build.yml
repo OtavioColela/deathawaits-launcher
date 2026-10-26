@@ -1,0 +1,39 @@
+name: Gerar launcher (Windows)
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Baixar Java 8 embutido (Temurin JRE x64)
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force runtime/java8 | Out-Null
+          Invoke-WebRequest "https://api.adoptium.net/v3/binary/latest/8/ga/windows/x64/jre/hotspot/normal/eclipse" -OutFile java8.zip
+          Expand-Archive java8.zip -DestinationPath runtime/java8
+          Get-ChildItem runtime/java8
+
+      - name: Gerar instalador
+        run: npm run dist
+
+      - name: Enviar arquivos
+        uses: actions/upload-artifact@v4
+        with:
+          name: DeathAwaits-Launcher
+          path: |
+            dist/*.exe
+            dist/*.blockmap
+            dist/latest.yml

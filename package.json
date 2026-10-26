@@ -1,0 +1,44 @@
+{
+  "name": "deathawaits-launcher",
+  "productName": "DeathAwaits Launcher",
+  "version": "1.0.2",
+  "description": "Launcher autônomo do modpack DeathAwaits (pirata e original)",
+  "main": "src/main.js",
+  "author": "DeathAwaits",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "integrity": "node scripts/integrity.js",
+    "java": "node scripts/baixar-java.js",
+    "dist": "npm run integrity && electron-builder --win --publish never",
+    "release": "npm run integrity && electron-builder --win --publish always"
+  },
+  "dependencies": {
+    "electron-updater": "6.8.9",
+    "extract-zip": "2.0.1",
+    "minecraft-launcher-core": "3.18.2",
+    "msmc": "5.0.5"
+  },
+  "devDependencies": {
+    "electron": "33.4.11",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "com.electron.deathawaits-launcher",
+    "productName": "DeathAwaits Launcher",
+    "files": ["src/**/*", "assets/**/*", "config.json", "package.json"],
+    "extraResources": [{ "from": "runtime", "to": "runtime", "filter": ["**/*"] }],
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "artifactName": "DeathAwaits-Launcher-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "DeathAwaits-Launcher-Portable-${version}.${ext}"
+    },
+    "publish": [{ "provider": "github", "owner": "ryan1235", "repo": "DeathAwaits", "releaseType": "release" }]
+  }
+}
