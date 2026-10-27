@@ -3,7 +3,11 @@ name: Gerar launcher (Windows)
 on:
   workflow_dispatch:
   push:
-    tags: ['v*']
+    branches: [main]
+    paths: ['src/**', 'assets/**', 'config.json', 'package.json', '.github/workflows/**']
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -28,6 +32,24 @@ jobs:
 
       - name: Gerar instalador
         run: npm run dist
+
+      - name: Ler versao
+        id: ver
+        shell: bash
+        run: echo "v=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Publicar release v${{ steps.ver.outputs.v }} (neste repositorio)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.ver.outputs.v }}
+          name: Launcher v${{ steps.ver.outputs.v }}
+          body: |
+            Arquivos para subir na release mais recente do ryan1235/DeathAwaits (atualizacao automatica dos launchers):
+            DeathAwaits-Launcher-Setup-${{ steps.ver.outputs.v }}.exe, o .blockmap e o latest.yml.
+          files: |
+            dist/*.exe
+            dist/*.blockmap
+            dist/latest.yml
 
       - name: Enviar arquivos
         uses: actions/upload-artifact@v4

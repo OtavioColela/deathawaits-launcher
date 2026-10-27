@@ -24,8 +24,8 @@ npm start
 ## Gerar uma versão nova
 
 1. Aumente `version` no `package.json` (ex.: 1.0.3). **Precisa ser maior** que a publicada, senão os launchers instalados não atualizam.
-2. Crie uma tag `v1.0.3` e envie (`git tag v1.0.3 && git push --tags`), ou rode o workflow **Gerar launcher (Windows)** na aba Actions.
-3. Baixe o artefato **DeathAwaits-Launcher** quando terminar.
+2. Envie para a branch `main` (o workflow roda sozinho) ou rode **Gerar launcher (Windows)** na aba Actions. Ele cria a release `vX.Y.Z` neste repositório com os arquivos.
+3. Baixe os arquivos da release `vX.Y.Z` deste repositório.
 4. Envie para a **release mais recente** do `ryan1235/DeathAwaits` (é de lá que os launchers instalados procuram atualização):
    - `DeathAwaits-Launcher-Setup-X.Y.Z.exe`
    - `DeathAwaits-Launcher-Setup-X.Y.Z.exe.blockmap`
