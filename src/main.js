@@ -36,10 +36,12 @@ const status = (text, pct) => send('status', { text, pct });
 function createWindow() {
   win = new BrowserWindow({
     width: 990, height: 640, minWidth: 900, minHeight: 600,
-    frame: false, backgroundColor: '#0d0d0f', icon: appIcon(),
+    frame: false, backgroundColor: '#181a13', icon: appIcon(),
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false }
   });
   win.setMenu(null);
+  // links que abrem nova janela (ex.: dentro do mapa) vao para o navegador do PC
+  win.webContents.setWindowOpenHandler(({ url }) => { if (/^https?:\/\//.test(url)) shell.openExternal(url); return { action: 'deny' }; });
   win.loadFile(path.join(__dirname, 'index.html'));
 }
 function showWindow() {

@@ -2,15 +2,16 @@
 <html lang="pt-br">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; frame-src https://deathawaits.com.br">
 <title>DeathAwaits Launcher</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="settings.css">
 <link rel="stylesheet" href="anim.css">
+<link rel="stylesheet" href="tema.css">
 </head>
 <body>
 <header class="titlebar">
-  <div class="brand"><img class="tb-icon" src="../assets/icon.png" alt=""><span>DeathAwaits Launcher</span></div>
+  <div class="brand"><img class="tb-icon" src="../assets/icon.png" alt=""><span class="tb-name">DeathAwaits</span><span class="tb-sub">Launcher</span></div>
   <div class="wc">
     <button data-w="min">&#8212;</button>
     <button data-w="max">&#9633;</button>
@@ -22,12 +23,20 @@
   <nav class="side">
     <div class="nav active" data-page="Home"><svg viewBox="0 0 24 24"><path d="M12 3 2 12h3v8h5v-6h4v6h5v-8h3z"/></svg>Início</div>
     <div class="nav" data-page="News"><svg viewBox="0 0 24 24"><path d="M3 10v4h3l5 4V6L6 10zm13.5 2a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>Novidades</div>
+    <div class="nav" data-page="Mapa"><svg viewBox="0 0 24 24"><path d="M15 5.1 9 3 3 5v16l6-2.1 6 2.1 6-2V3zM10 5.5l4 1.4v11.6l-4-1.4z"/></svg>Mapa</div>
     <div class="nav" data-page="Settings"><svg viewBox="0 0 24 24"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.5 7.5 0 0 0-1.7-1L15 3h-4l-.4 2.9a7.5 7.5 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1c.5.4 1.1.7 1.7 1L11 21h4l.4-2.9c.6-.3 1.2-.6 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>Configurações</div>
     <div class="ver" id="launcherVer">DeathAwaits Launcher v1.0</div>
   </nav>
 
   <main id="pageHome">
-    <section class="hero"><canvas id="embers"></canvas></section>
+    <section class="hero"><canvas id="embers"></canvas>
+      <div class="hero-in">
+        <div class="eyebrow">Crafting Dead · Minecraft 1.6.4</div>
+        <h1>Death<span>Awaits</span></h1>
+      </div>
+      <span class="stamp">Zona infectada</span>
+    </section>
+    <div class="hazard" aria-hidden="true"></div>
 
     <section class="card play">
       <img class="grass" alt="" src="../assets/grass.svg">
@@ -71,6 +80,15 @@
   <main id="pageNews" class="hidden newspage">
     <h1>Novidades <button class="btn2 sm" id="relReload">Atualizar</button></h1>
     <div id="relList"></div>
+  </main>
+
+  <main id="pageMapa" class="hidden mapapage">
+    <div class="mapa-top"><div><div class="eyebrow">Registro de reconhecimento · Setor DA-164</div><h1>O <span>mapa</span></h1></div>
+      <span class="btns"><button class="btn2 sm" id="mapaReload">Atualizar</button><button class="btn2 sm" id="mapaOpen">Abrir no navegador</button></span></div>
+    <div class="mapa-box">
+      <iframe id="mapaFrame" title="Mapa do DeathAwaits" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+      <div id="mapaMsg" class="mapa-msg"><b>Carregando o mapa...</b><small>Ele vem direto do site, sempre atualizado.</small></div>
+    </div>
   </main>
 
   <main id="pageSettings" class="hidden settings">
@@ -118,8 +136,10 @@
   </main>
 
   <aside class="right-panel">
-    <h3>Status do servidor</h3>
-    <div class="status"><i id="dot" class="dot off"></i><span id="stxt" class="off">Offline</span></div>
+    <div class="sbox">
+      <div class="sbox-h"><i id="dot" class="dot off"></i><span>Servidor</span></div>
+      <div class="sbox-b"><small>Status</small><span id="stxt" class="off">Offline</span></div>
+    </div>
     <hr>
     <h4>Links úteis</h4>
     <ul id="links"></ul>

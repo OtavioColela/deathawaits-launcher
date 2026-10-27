@@ -13,7 +13,7 @@ function toast(msg, bad) {
   const t = document.createElement('div');
   t.textContent = msg;
   t.className = 'toast';
-  t.style.cssText = `position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:99;background:${bad ? '#3a1012' : '#1a1a1e'};border:1px solid ${bad ? '#ff2a2a' : '#2c2c31'};color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;max-width:70%;box-shadow:0 8px 24px #000a`;
+  t.style.cssText = `position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:99;background:${bad ? '#3a1612' : '#22251b'};border:1px solid ${bad ? '#d0634f' : '#3a3e2e'};color:#e6e1cf;padding:12px 18px;border-radius:0;font-family:'IBM Plex Sans',sans-serif;font-size:13px;max-width:70%;box-shadow:0 8px 24px #000a`;
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 5000);
 }
@@ -103,7 +103,7 @@ api.on('status', setStatus);
 api.on('started', () => { $('playTxt').textContent = 'Jogando'; $('progress').classList.add('hidden'); });
 api.on('closed', (code) => { setBusy(false); if (code) toast(`O Minecraft fechou com erro (código ${code}). Veja o log em Configurações › Ferramentas.`, true); });
 
-const PAGES = { Home: 'pageHome', News: 'pageNews', Settings: 'pageSettings' };
+const PAGES = { Home: 'pageHome', News: 'pageNews', Mapa: 'pageMapa', Settings: 'pageSettings' };
 function goPage(name) {
   document.querySelectorAll('.nav').forEach((x) => x.classList.toggle('active', x.dataset.page === name));
   for (const [k, id] of Object.entries(PAGES)) {
@@ -113,7 +113,28 @@ function goPage(name) {
   }
   if (name === 'Settings') renderDiag();
   if (name === 'News') loadReleases();
+  if (name === 'Mapa') loadMapa(false);
 }
+
+// ================= mapa (vem do site) =================
+const MAPA_URL = 'https://deathawaits.com.br/mapa.html';
+let mapaCarregado = false, mapaTimer = null;
+function loadMapa(force) {
+  if (mapaCarregado && !force) return;
+  const f = $('mapaFrame'), m = $('mapaMsg');
+  m.classList.remove('hidden', 'err');
+  m.innerHTML = '<b>Carregando o mapa...</b><small>Ele vem direto do site, sempre atualizado.</small>';
+  clearTimeout(mapaTimer);
+  mapaTimer = setTimeout(() => {
+    m.classList.add('err');
+    m.innerHTML = '<b>Não consegui abrir o mapa</b><small>Confira sua internet e tente de novo.</small><span class="btns"><button class="btn2 sm" id="mapaRetry">Tentar de novo</button></span>';
+    $('mapaRetry').onclick = () => loadMapa(true);
+  }, 20000);
+  f.onload = () => { clearTimeout(mapaTimer); mapaCarregado = true; m.classList.add('hidden'); };
+  f.src = MAPA_URL + '?t=' + Date.now();
+}
+$('mapaReload').onclick = () => loadMapa(true);
+$('mapaOpen').onclick = () => api.link('https://deathawaits.com.br/#mapa');
 document.querySelectorAll('.nav').forEach((n) => (n.onclick = () => goPage(n.dataset.page)));
 $('newsCard').onclick = () => goPage('News');
 $('pageHome').classList.add('enter');
@@ -182,8 +203,8 @@ $('relReload').onclick = async () => { $('relReload').disabled = true; await loa
       const life = Math.max(0, p.y / H);
       if (p.y < -10) Object.assign(p, spawn(false));
       x.globalAlpha = p.a * Math.min(1, life * 1.6);
-      x.fillStyle = `hsl(${p.h},100%,55%)`;
-      x.shadowColor = '#ff2a2a'; x.shadowBlur = 8;
+      x.fillStyle = `hsl(${30 + p.h},70%,${55 + p.h / 2}%)`;
+      x.shadowColor = '#e0b43c'; x.shadowBlur = 6;
       x.beginPath(); x.arc(p.x, p.y, p.r, 0, 6.283); x.fill();
     }
   })();
@@ -499,7 +520,7 @@ async function wizFinish() {
 
   // integridade do launcher a cada abertura
   api.verifyLauncher().then((r) => {
-    if (!r.ok) { $('launcherVer').textContent = '⚠ Launcher alterado — reinstale'; $('launcherVer').style.color = '#ff2a2a'; }
+    if (!r.ok) { $('launcherVer').textContent = '⚠ Launcher alterado — reinstale'; $('launcherVer').style.color = '#d0634f'; }
   });
 
   if (!S.setupDone) wizOpen();

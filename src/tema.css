@@ -1,0 +1,134 @@
+/* =====================================================================
+   Tema DeathAwaits (mesma identidade do site deathawaits.com.br):
+   "relatório de quarentena" — fundo verde-oliva escuro, ocre de faixa de
+   perigo, títulos em estêncil, rótulos em fonte mono e cantos retos.
+   ===================================================================== */
+@font-face { font-family: "Big Shoulders Stencil Display"; src: url(../assets/fonts/BigShouldersStencilDisplay.ttf) format("truetype"); font-weight: 100 900; }
+@font-face { font-family: "IBM Plex Sans"; src: url(../assets/fonts/IBMPlexSans.ttf) format("truetype"); font-weight: 100 700; }
+@font-face { font-family: "IBM Plex Mono"; src: url(../assets/fonts/IBMPlexMono-Regular.ttf) format("truetype"); font-weight: 400; }
+@font-face { font-family: "IBM Plex Mono"; src: url(../assets/fonts/IBMPlexMono-SemiBold.ttf) format("truetype"); font-weight: 600; }
+
+:root {
+  --bg: #181a13; --panel: #1d2017; --card: #22251b; --line: #3a3e2e;
+  --txt: #e6e1cf; --mut: #a3a48d; --red: #e0b43c; --red2: #d0634f;
+  --accent: #e0b43c; --accent-fg: #1b1a10; --blood: #d0634f; --paper: #e6e1cf;
+  --f-display: "Big Shoulders Stencil Display", Impact, "Arial Narrow", sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", Consolas, monospace;
+}
+html, body { font-family: var(--f-body); }
+body::after { /* linhas de varredura bem leves, como no site */
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 200;
+  background: repeating-linear-gradient(0deg, #0000 0 3px, #00000014 3px 4px);
+}
+
+/* faixa de perigo */
+.hazard { flex: none; height: 10px; margin: -12px -14px 0; background: repeating-linear-gradient(-45deg, var(--accent) 0 12px, #0000 12px 24px); opacity: .9; border-bottom: 1px solid var(--line); }
+
+/* ---------- barra de título ---------- */
+.titlebar { background: #14160f; border-bottom: 1px solid var(--line); }
+.tb-name { font-family: var(--f-display); font-weight: 900; font-size: 19px; letter-spacing: .08em; text-transform: uppercase; color: var(--paper); }
+.tb-sub { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--mut); border: 1px solid var(--line); padding: 1px 6px; }
+.wc button { color: var(--mut); }
+.wc button:hover { background: #2a2e21; color: var(--paper); }
+
+/* ---------- menu lateral ---------- */
+.side { background: #15170f; }
+.nav { font-family: var(--f-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--mut); border-radius: 0; }
+.nav svg { flex: none; }
+.nav:hover { background: #22251b; color: var(--paper); }
+.nav.active { background: #262a1e; color: var(--paper); box-shadow: inset 3px 0 0 var(--accent); }
+.nav.active svg { color: var(--accent); }
+.ver { font-family: var(--f-mono); letter-spacing: .06em; color: #6b6e5a; }
+
+/* ---------- capa ---------- */
+.hero { position: relative; overflow: hidden; display: flex; align-items: flex-end; background: #181a13; }
+.hero::before { /* foto do servidor com leve movimento (ken burns do anim.css) */
+  background:
+    linear-gradient(90deg, #181a13f2 0%, #181a13b8 42%, #181a1330 100%),
+    url(../assets/hero.jpg) center 40% / cover;
+}
+.hero::after { background: linear-gradient(0deg, #181a13 0%, #0000 50%); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-in { position: relative; padding: 0 26px 22px; }
+.eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--blood); margin-bottom: 6px; }
+.hero h1 { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; line-height: .86; font-size: clamp(56px, 9vw, 96px); letter-spacing: .01em; color: var(--paper); text-shadow: 0 3px 0 #0006; }
+.hero h1 span { display: block; color: var(--accent); }
+.stamp {
+  position: absolute; top: 20px; right: 22px; transform: rotate(-6deg);
+  font-family: var(--f-mono); font-weight: 600; font-size: 13px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--blood); border: 2px solid var(--blood); padding: 5px 12px; background: #181a1399; opacity: .9;
+}
+
+/* ---------- cartões ("fichas") ---------- */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 0; }
+.play { border-color: #55594a; }
+.pack h2 { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; letter-spacing: .05em; font-size: 24px; }
+.pack span, .nick label, .info small, .right-panel h4 {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--mut);
+}
+.nick input { background: #181a13; border: 1px solid var(--line); border-radius: 0; color: var(--paper); font-family: var(--f-body); }
+.nick input:focus { border-color: var(--accent); }
+.btn-play {
+  border-radius: 0; background: var(--accent); color: var(--accent-fg); font-weight: 600; letter-spacing: .02em;
+  box-shadow: 4px 4px 0 #0007; transition: transform .12s, box-shadow .12s, filter .15s;
+}
+.btn-play:hover { filter: brightness(1.08); transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #0007; }
+.btn-play:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #0007; }
+.btn-dd { border-radius: 0; background: #181a13; border-color: var(--line); color: var(--paper); }
+.btn-dd:hover { background: #2a2e21; }
+.menu { border-radius: 0; background: #22251b; border-color: var(--line); }
+.menu div:hover { background: #2a2e21; }
+.menu div.sel { color: var(--accent); }
+.bar { border-radius: 0; background: #30342a; }
+.bar i { background: repeating-linear-gradient(-45deg, var(--accent) 0 8px, #c99a24 8px 16px); }
+.info .left { border-color: var(--line); }
+.reltitle { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; letter-spacing: .04em; font-size: 20px; margin: 2px 0 4px; }
+.info .right b { font-family: var(--f-mono); color: var(--paper); }
+.news svg { color: var(--accent); }
+.news b { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; letter-spacing: .05em; font-size: 17px; }
+.news:hover { border-color: #55594a; }
+
+/* ---------- painel da direita ---------- */
+.right-panel { background: #15170f; }
+.sbox { border: 1px solid #55594a; }
+.sbox-h { display: flex; align-items: center; gap: 9px; background: var(--paper); color: #1b1a10; padding: 8px 12px; font-family: var(--f-mono); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.sbox-b { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 3px; }
+.sbox-b small { font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--mut); }
+#stxt { font-family: var(--f-mono); font-weight: 600; font-size: 14px; color: #8fc66a; }
+#stxt.off { color: var(--blood); }
+.dot { width: 10px; height: 10px; background: #6aa84f; box-shadow: 0 0 0 3px #6aa84f33; }
+.dot.off { background: var(--blood); box-shadow: 0 0 0 3px #d0634f33; }
+#links li { color: #c9c5b3; }
+#links li:hover { color: var(--accent); }
+
+/* ---------- páginas internas ---------- */
+.settings h1, .newspage h1 { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; letter-spacing: .05em; font-size: 30px; }
+.sub { font-family: var(--f-mono); letter-spacing: .14em; }
+.btn2 { border-radius: 0; background: #22251b; border-color: var(--line); color: var(--paper); font-family: var(--f-body); }
+.btn2:hover { background: #2a2e21; border-color: var(--accent); }
+.inp, .sel, .rcard, .recbox div, .sum, .wbox { border-radius: 0; }
+.badge { border-radius: 0; font-family: var(--f-mono); letter-spacing: .06em; }
+.rel .tag, .tag { border-radius: 0; font-family: var(--f-mono); }
+.switch i { border-radius: 0; }
+.switch i::after { border-radius: 0; }
+input[type=range] { border-radius: 0; }
+input[type=range]::-webkit-slider-thumb { border-radius: 0; background: var(--paper); }
+.wbody h2 { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; letter-spacing: .04em; font-size: 28px; }
+
+/* ---------- página do mapa ---------- */
+.mapapage { padding: 18px 20px 16px; gap: 12px; }
+.mapa-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex: none; }
+.mapa-top h1 { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: 40px; line-height: .9; color: var(--paper); }
+.mapa-top h1 span { color: var(--accent); }
+.mapa-box { position: relative; flex: 1; min-height: 0; border: 1px solid #55594a; background: #181a13; }
+.mapa-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #181a13; }
+.mapa-msg { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: #181a13; text-align: center; padding: 20px; }
+.mapa-msg b { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; letter-spacing: .06em; font-size: 22px; color: var(--paper); }
+.mapa-msg small { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--mut); }
+.mapa-msg:not(.err) b::after { content: ""; display: inline-block; width: .5em; animation: pisca 1s steps(1) infinite; border-bottom: 3px solid var(--accent); margin-left: 6px; }
+.mapa-msg.err b { color: var(--blood); }
+.mapa-msg .btns { margin-top: 10px; }
+@keyframes pisca { 50% { opacity: 0; } }
+
+::-webkit-scrollbar-thumb { background: #3a3e2e; border-radius: 0; }

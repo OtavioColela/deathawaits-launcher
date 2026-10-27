@@ -35,3 +35,10 @@ npm start
 > A atualização automática lê o `latest.yml` da release marcada como **Latest**. Toda release nova do modpack também precisa ter o `latest.yml` + instalador, senão os launchers deixam de achar atualização.
 
 O Java 8 embutido (`runtime/java8`) é baixado pelo workflow e não fica no repositório.
+
+## Visual
+
+O tema segue a identidade do site (`src/tema.css`): fundo verde-oliva, ocre de faixa de perigo, títulos em estêncil e rótulos em fonte mono.
+A aba **Mapa** abre `https://deathawaits.com.br/mapa.html` (a versão só-mapa do site), então ela se atualiza sozinha junto com o site.
+
+Fontes em `assets/fonts` (licença SIL Open Font License — arquivos `OFL-*.txt`): Big Shoulders Stencil Display, IBM Plex Sans e IBM Plex Mono.
