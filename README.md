@@ -26,13 +26,7 @@ npm start
 1. Aumente `version` no `package.json` (ex.: 1.0.3). **Precisa ser maior** que a publicada, senão os launchers instalados não atualizam.
 2. Envie para a branch `main` (o workflow roda sozinho) ou rode **Gerar launcher (Windows)** na aba Actions. Ele cria a release `vX.Y.Z` neste repositório com os arquivos.
 3. Baixe os arquivos da release `vX.Y.Z` deste repositório.
-4. Envie para a **release mais recente** do `ryan1235/DeathAwaits` (é de lá que os launchers instalados procuram atualização):
-   - `DeathAwaits-Launcher-Setup-X.Y.Z.exe`
-   - `DeathAwaits-Launcher-Setup-X.Y.Z.exe.blockmap`
-   - `latest.yml`
-   - (opcional) `DeathAwaits-Launcher-Portable-X.Y.Z.exe`
-
-> A atualização automática lê o `latest.yml` da release marcada como **Latest**. Toda release nova do modpack também precisa ter o `latest.yml` + instalador, senão os launchers deixam de achar atualização.
+4. Pronto: a partir da 1.1.2 os launchers instalados procuram atualização **neste repositório** (`OtavioColela/deathawaits-launcher`), na release marcada como **Latest**. Não precisa mais subir nada no `ryan1235/DeathAwaits` (lá fica só o modpack: `manifest.json` + `DeathAwaits-modpack.zip`).
 
 O Java 8 embutido (`runtime/java8`) é baixado pelo workflow e não fica no repositório.
 

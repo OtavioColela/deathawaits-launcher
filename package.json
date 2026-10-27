@@ -1,7 +1,7 @@
 {
   "name": "deathawaits-launcher",
   "productName": "DeathAwaits Launcher",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Launcher autônomo do modpack DeathAwaits (pirata e original)",
   "main": "src/main.js",
   "author": "DeathAwaits",
@@ -39,6 +39,6 @@
     "portable": {
       "artifactName": "DeathAwaits-Launcher-Portable-${version}.${ext}"
     },
-    "publish": [{ "provider": "github", "owner": "ryan1235", "repo": "DeathAwaits", "releaseType": "release" }]
+    "publish": [{ "provider": "github", "owner": "OtavioColela", "repo": "deathawaits-launcher", "releaseType": "release" }]
   }
 }
