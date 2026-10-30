@@ -12,6 +12,11 @@
     "min": "1G",
     "max": "3G"
   },
+  "discordClientId": "1565770800672284806",
+  "rpc": {
+    "details": "Sobrevivendo no apocalipse",
+    "download": "https://deathawaits.com.br/baixar"
+  },
   "links": {
     "Discord": "https://discord.gg/gc73gQfb5F",
     "Site": "https://deathawaits.com.br"

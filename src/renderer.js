@@ -301,6 +301,8 @@ function bindSettings() {
   $('javaScan').onclick = async () => { $('javaScan').disabled = true; await bindJava($('javaSel'), $('javaWarn'), $('javaRec'), true); $('javaScan').disabled = false; toast('Busca de Java concluída'); };
   $('after').value = S.afterLaunch || 'hide';
   $('after').onchange = () => api.save({ afterLaunch: $('after').value });
+  $('discordRpc').checked = S.discordRpc !== false;
+  $('discordRpc').onchange = () => api.save({ discordRpc: $('discordRpc').checked });
   $('fullscreen').checked = !!S.fullscreen;
   $('fullscreen').onchange = () => { api.save({ fullscreen: $('fullscreen').checked }); $('winW').disabled = $('winH').disabled = $('fullscreen').checked; };
   $('winW').value = S.width || ''; $('winH').value = S.height || '';

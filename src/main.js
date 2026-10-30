@@ -422,7 +422,7 @@ ipcMain.handle('verify-pack', async () => {
     return { ok: r.bad.length === 0, total: r.total, bad: r.bad };
   } catch (e) { return { ok: false, error: String(e.message || e) }; }
 });
-ipcMain.handle('ping', () => new Promise((resolve) => {
+const pingServer = () => new Promise((resolve) => {
   const sock = net.connect({ host: config.server.host, port: config.server.port });
   sock.setTimeout(3000);
   const fin = (r) => { sock.destroy(); resolve(r); };
@@ -452,7 +452,41 @@ ipcMain.handle('ping', () => new Promise((resolve) => {
   });
   sock.on('timeout', () => fin({ online: false }));
   sock.on('error', () => fin({ online: false }));
-}));
+});
+ipcMain.handle('ping', pingServer);
+
+// ---------- Rich Presence do Discord ----------
+const DiscordRPC = require('./discord');
+const rpc = config.discordClientId ? new DiscordRPC(config.discordClientId) : null;
+let rpcInicio = 0, rpcTimer = null;
+async function rpcAtualizar() {
+  if (!rpc || !playing) return;
+  let online = '';
+  try { const r = await pingServer(); if (r.online && r.players) online = `${r.players.online}/${r.players.max} sobreviventes online`; } catch {}
+  const botoes = [];
+  if (config.rpc && config.rpc.download) botoes.push({ label: 'Baixar o launcher', url: config.rpc.download });
+  if (config.links && config.links.Discord) botoes.push({ label: 'Entrar no Discord', url: config.links.Discord });
+  rpc.definir({
+    details: (config.rpc && config.rpc.details) || 'Sobrevivendo no apocalipse',
+    state: online || 'Crafting Dead · Minecraft 1.6.4',
+    timestamps: { start: rpcInicio },
+    assets: { large_image: 'logo', large_text: 'DeathAwaits · Crafting Dead 1.6.4', small_image: 'icone', small_text: 'deathawaits.com.br' },
+    buttons: botoes.length ? botoes : undefined,
+    instance: false
+  });
+}
+function rpcComecar() {
+  if (!rpc || loadSettings().discordRpc === false) return;
+  rpcInicio = Date.now();
+  rpcAtualizar();
+  clearInterval(rpcTimer);
+  rpcTimer = setInterval(rpcAtualizar, 60000); // atualiza os players online e reconecta se o Discord abrir depois
+}
+function rpcParar() {
+  clearInterval(rpcTimer); rpcTimer = null;
+  if (rpc) rpc.definir(null);
+}
+app.on('before-quit', () => { if (rpc) rpc.encerrar(); });
 
 // ---------- notas de versão (GitHub Releases) ----------
 const releasesFile = path.join(userData, 'releases.json');
@@ -521,6 +555,7 @@ ipcMain.handle('play', async (_, { mode, nick }) => {
     launcher.on('data', (m) => log.write(`${m}\n`));
     launcher.on('close', (code) => {
       playing = false; launching = false; log.end();
+      rpcParar();
       send('closed', code);
       showWindow();
     });
@@ -537,6 +572,7 @@ ipcMain.handle('play', async (_, { mode, nick }) => {
     const proc = await launcher.launch(opts);
     if (!proc) throw new Error('Não foi possível iniciar o Minecraft');
     playing = true;
+    rpcComecar();
     send('started');
     const after = st.afterLaunch || 'hide';
     setTimeout(() => {
