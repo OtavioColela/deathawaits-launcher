@@ -1,0 +1,32 @@
+name: Publicar manifest do modpack
+
+# Quando modpack/manifest.json muda, atualiza a release fixa "modpack" (que NAO e a "Latest",
+# para nao atrapalhar a atualizacao automatica do launcher). O DeathAwaits-modpack.zip e enviado
+# manualmente nessa mesma release (e grande demais para ficar no repositorio).
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['modpack/**']
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ler versao do modpack
+        id: v
+        run: echo "v=$(python3 -c "import json;print(json.load(open('modpack/manifest.json'))['version'])")" >> $GITHUB_OUTPUT
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: modpack
+          name: Modpack DeathAwaits (${{ steps.v.outputs.v }})
+          make_latest: false
+          body: |
+            Modpack usado pelo launcher. Arquivos desta release:
+            - manifest.json (publicado automaticamente a partir de modpack/manifest.json)
+            - DeathAwaits-modpack.zip (enviado manualmente; o sha1 precisa bater com o zipSha1 do manifest)
+          files: modpack/manifest.json

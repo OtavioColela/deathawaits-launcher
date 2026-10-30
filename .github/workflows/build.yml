@@ -43,6 +43,7 @@ jobs:
         with:
           tag_name: v${{ steps.ver.outputs.v }}
           name: Launcher v${{ steps.ver.outputs.v }}
+          make_latest: true
           body: |
             Arquivos para subir na release mais recente do ryan1235/DeathAwaits (atualizacao automatica dos launchers):
             DeathAwaits-Launcher-Setup-${{ steps.ver.outputs.v }}.exe, o .blockmap e o latest.yml.

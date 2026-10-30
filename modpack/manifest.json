@@ -1,0 +1,66 @@
+{
+  "version": "v1.0.6",
+  "mcVersion": "1.6.4",
+  "customVersion": "DeathAwaits",
+  "zipUrl": "https://github.com/OtavioColela/deathawaits-launcher/releases/download/modpack/DeathAwaits-modpack.zip",
+  "zipSha1": "9cead5f47231132cfc1658034a566db1916333aa",
+  "zipSize": 64439241,
+  "files": [
+    {
+      "path": "libraries/net/minecraftforge/minecraftforge/9.11.1.1345/minecraftforge-9.11.1.1345.jar",
+      "sha1": "eb9d954c8d057fa1768acaa40a35b864ad05c58b",
+      "size": 2014260
+    },
+    {
+      "path": "mods/carpenters_blocks_mod_1.6.4.zip",
+      "sha1": "cd810685a22b0b705e8465d74ab6250ccae774df",
+      "size": 403777
+    },
+    {
+      "path": "mods/craftingdead.jar",
+      "sha1": "8e41090e5274f119b5366ae55fd393de0cd05c30",
+      "size": 56285076
+    },
+    {
+      "path": "mods/DATitulos.jar",
+      "sha1": "8dd4c5061c193c599721c62c12aaab6839e8c9a7",
+      "size": 5148
+    },
+    {
+      "path": "mods/DeadCenterSkins-0.1.5.jar",
+      "sha1": "9c4f8782c5651a34787db9976c898efbe3e905b5",
+      "size": 37782
+    },
+    {
+      "path": "mods/Decocraft_1.10.0_1.6.4.zip",
+      "sha1": "429d92c6cc26689034eeaf6eac9d7b01ed0032e4",
+      "size": 8719294
+    },
+    {
+      "path": "mods/mrcrayfishfurnituremodv3.3.41.6.4.jar",
+      "sha1": "fd57e86b8e6aeaed656f394339ecffd15158ff67",
+      "size": 1271975
+    },
+    {
+      "path": "mods/OptiFine-1.6.4_HD_U_D1.jar",
+      "sha1": "2b187cb6a0c4135f0514330dd20c63e1cafa982f",
+      "size": 428068
+    },
+    {
+      "path": "mods/StrongerZombie-2.0.0.jar",
+      "sha1": "944b9df8f51ca60d9227e5471d55529402d57857",
+      "size": 48909
+    },
+    {
+      "path": "mods/Voicemod.jar",
+      "sha1": "30f74585c133ec8b94324b72c651116592a3f51b",
+      "size": 34168
+    },
+    {
+      "path": "versions/DeathAwaits/DeathAwaits.json",
+      "sha1": "7715fdc372198b8786efff8cfdee0d0cd392211e",
+      "size": 6279
+    }
+  ],
+  "delete": []
+}
