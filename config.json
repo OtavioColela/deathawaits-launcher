@@ -3,7 +3,7 @@
   "modpackName": "Modpack",
   "mcVersion": "1.6.4",
   "javaDownloadUrl": "https://api.adoptium.net/v3/binary/latest/{v}/ga/windows/x64/jre/hotspot/normal/eclipse",
-  "manifestUrl": "https://github.com/ryan1235/DeathAwaits/releases/latest/download/manifest.json",
+  "manifestUrl": "https://github.com/OtavioColela/deathawaits-launcher/releases/download/modpack/manifest.json",
   "server": {
     "host": "node.skycenterhosting.com.br",
     "port": 25567
