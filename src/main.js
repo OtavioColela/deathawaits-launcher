@@ -69,7 +69,9 @@ function checkLauncherUpdate() {
   try {
     const { autoUpdater } = require('electron-updater');
     autoUpdater.on('update-available', () => status('Atualizando o launcher...', 0));
-    autoUpdater.on('update-downloaded', () => autoUpdater.quitAndInstall(true, true));
+    // so instala com o jogo fechado (o Minecraft aberto trava arquivos e o instalador falha)
+    const instalar = () => { if (playing || launching) return setTimeout(instalar, 15000); autoUpdater.quitAndInstall(true, true); };
+    autoUpdater.on('update-downloaded', instalar);
     autoUpdater.on('error', () => {});
     autoUpdater.checkForUpdates().catch(() => {});
   } catch {}
@@ -183,11 +185,23 @@ async function ensureJava(mc) {
   const custom = loadSettings().javaPath;
   if (custom && fs.existsSync(custom)) return custom;
   const major = javaMajorFor(mc);
-  const bundled = findJava(path.join(process.resourcesPath || '', 'runtime', 'java' + major)) || findJava(path.join(__dirname, '..', 'runtime', 'java' + major));
-  if (bundled) return bundled;
   const dir = path.join(userData, 'runtime', 'java' + major);
   const have = findJava(dir);
   if (have) return have;
+  // Java que vem no instalador: copia para a pasta de dados antes de usar. Se o jogo rodasse direto da pasta
+  // do launcher, o Windows travaria esses arquivos e a atualizacao do launcher falharia ("falha ao desinstalar").
+  const embutido = [path.join(process.resourcesPath || '', 'runtime', 'java' + major), path.join(__dirname, '..', 'runtime', 'java' + major)].find((d) => findJava(d));
+  if (embutido) {
+    try {
+      status('Preparando o Java (só na primeira vez)...', 0);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.cpSync(embutido, dir, { recursive: true });
+      javaCache.list = null;
+      const copiado = findJava(dir);
+      if (copiado) return copiado;
+    } catch {}
+    return findJava(embutido); // nao deu para copiar: usa direto mesmo
+  }
   status(`Baixando Java ${major} (só na primeira vez)...`, 0);
   const zip = path.join(userData, 'java.zip');
   await download(config.javaDownloadUrl.replace('{v}', major), zip, (p, d, t) => status(`Baixando Java ${major} — ${MB(d)} / ${MB(t)} MB`, p * 100));
