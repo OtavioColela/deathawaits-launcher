@@ -1,0 +1,28 @@
+name: Manter launcher como latest
+# O auto-update do launcher procura o latest.yml no release marcado como "Latest".
+# Se o release "modpack" virar Latest (ex.: ao editar pelo site do GitHub), o update quebra.
+# Este workflow marca sempre o release vX.Y.Z mais novo como Latest.
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/latest.yml"]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
+permissions:
+  contents: write
+jobs:
+  corrigir:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          R: ${{ github.repository }}
+        run: |
+          atual=$(gh api repos/$R/releases/latest -q .tag_name || echo "")
+          novo=$(gh api repos/$R/releases --paginate -q '.[]|select(.draft==false and .prerelease==false)|.tag_name' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+          echo "latest atual: $atual / launcher mais novo: $novo"
+          if [ -n "$novo" ] && [ "$atual" != "$novo" ]; then
+            id=$(gh api repos/$R/releases/tags/$novo -q .id)
+            gh api -X PATCH repos/$R/releases/$id -f make_latest=true -q .tag_name
+          fi
