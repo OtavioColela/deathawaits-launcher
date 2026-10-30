@@ -1,10 +1,10 @@
 {
-  "version": "v1.0.6",
+  "version": "v1.0.7",
   "mcVersion": "1.6.4",
   "customVersion": "DeathAwaits",
   "zipUrl": "https://github.com/OtavioColela/deathawaits-launcher/releases/download/modpack/DeathAwaits-modpack.zip",
-  "zipSha1": "9cead5f47231132cfc1658034a566db1916333aa",
-  "zipSize": 64439241,
+  "zipSha1": "2679731a25f94f16af05ed72c9c637327e1e57a6",
+  "zipSize": 66117879,
   "files": [
     {
       "path": "libraries/net/minecraftforge/minecraftforge/9.11.1.1345/minecraftforge-9.11.1.1345.jar",
@@ -18,8 +18,8 @@
     },
     {
       "path": "mods/craftingdead.jar",
-      "sha1": "8e41090e5274f119b5366ae55fd393de0cd05c30",
-      "size": 56285076
+      "sha1": "7e881466bdc23d1320f4015cf92fa90ad516445e",
+      "size": 57970454
     },
     {
       "path": "mods/DATitulos.jar",
