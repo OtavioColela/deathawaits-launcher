@@ -15,7 +15,9 @@
   "discordClientId": "1565770800672284806",
   "rpc": {
     "details": "Sobrevivendo no apocalipse",
-    "download": "https://deathawaits.com.br/baixar"
+    "download": "https://deathawaits.com.br/baixar",
+    "largeImage": "https://deathawaits.com.br/rpc/logo.png",
+    "smallImage": "https://deathawaits.com.br/rpc/icone.png"
   },
   "links": {
     "Discord": "https://discord.gg/gc73gQfb5F",

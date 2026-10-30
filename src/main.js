@@ -484,7 +484,7 @@ async function rpcAtualizar() {
     details: (config.rpc && config.rpc.details) || 'Sobrevivendo no apocalipse',
     state: online || 'Crafting Dead · Minecraft 1.6.4',
     timestamps: { start: rpcInicio },
-    assets: { large_image: 'logo', large_text: 'DeathAwaits · Crafting Dead 1.6.4', small_image: 'icone', small_text: 'deathawaits.com.br' },
+    assets: { large_image: (config.rpc && config.rpc.largeImage) || 'logo', large_text: 'DeathAwaits · Crafting Dead 1.6.4', small_image: (config.rpc && config.rpc.smallImage) || 'icone', small_text: 'deathawaits.com.br' },
     buttons: botoes.length ? botoes : undefined,
     instance: false
   });

@@ -1,7 +1,7 @@
 {
   "name": "deathawaits-launcher",
   "productName": "DeathAwaits Launcher",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Launcher autônomo do modpack DeathAwaits (pirata e original)",
   "main": "src/main.js",
   "author": "DeathAwaits",
